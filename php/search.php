@@ -1,5 +1,11 @@
 <?php
-require("configuration.php");
+/*
+ * Year: 2016
+ * Author: Danny Steven Salazar Mazo
+ *
+ * This file performs all related search queries.
+ */
+date_default_timezone_set('UTC');
 require("TMDBConnection.php");
 
 $result = '';
@@ -26,6 +32,9 @@ switch ($type) {
 	case 'movieInfo':
 		$searchCriteria =  $_POST['movie'];
 		$result = $connection->searchMovieInfo($searchCriteria);
+		break;
+	case 'configuration':
+		$result = $connection->generateConfiguration();
 		break;
 	default:
 		break;

@@ -1,3 +1,5 @@
+/* This is the main stylesheet, feel free to edit.*/
+
 .text-centered {
 	text-align: center;
 	font-size: 1.3em;
@@ -11,30 +13,12 @@
     margin-right:-4px;
 }
 
-#person-result {
-    text-align: center;
-    border-right: 2px dashed black;
-}
-
-#person-info {
-    text-align: justify;
-}
-
-#person-photo {
-    border: 2px solid blue;
-    padding: 2px;
-}
-
 .hidden {
-	display: none;
+    display: none;
 }
 
 .showed {
-	display: inline-block;
-}
-
-#messages, #results, #persons {
-    display: none;
+    display: inline-block;
 }
 
 .movie
@@ -76,4 +60,22 @@
 .genres-movie {
     border-top: 1px dashed blue;
     padding: 5px;
+}
+
+#person-result {
+    text-align: center;
+    border-right: 2px dashed black;
+}
+
+#person-info {
+    text-align: justify;
+}
+
+#person-photo {
+    border: 2px solid blue;
+    padding: 2px;
+}
+
+#messages, #results, #persons {
+    display: none;
 }

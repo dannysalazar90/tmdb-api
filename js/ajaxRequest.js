@@ -1,3 +1,10 @@
+/**
+ * Year: 2016
+ * Author: Danny Salazar
+ *
+ * This file is used to perform POST calls to the backend, can add other verboses.
+ */
+
 function ajaxRequest() { }
 
 ajaxRequest.post = function (url, data, succesFunction) {

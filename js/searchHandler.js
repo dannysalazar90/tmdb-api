@@ -12,11 +12,10 @@ searchHandler.searchElementId = 'actor-name';
 searchHandler.searchUrl = 'php/search.php';
 searchHandler.currentPerson = -1;
 searchHandler.youtubeSearch = 'https://www.youtube.com/results?search_query=';
-searchHandler.wikipediaSearch = 'https://es.wikipedia.org/w/index.php?search=';
 searchHandler.imdbName = 'http://www.imdb.com/name/';
 searchHandler.imdbTitle = 'http://www.imdb.com/title/';
 
-/** This method is dispatched each time the user types something, waiting for enter key. */
+// This method is dispatched each time the user types something, waiting for enter key.
 searchHandler.handleChangeEvent = function (event) {
 	var value = searchHandler.getValue();
 	hideElement('messages');
@@ -28,12 +27,12 @@ searchHandler.handleChangeEvent = function (event) {
 	}
 }
 
-/** Gets the value of the text field. */
+// Gets the value of the text field.
 searchHandler.getValue = function () {
 	return $('#' + searchHandler.searchElementId).val();
 }
 
-/** Callback for search person call. */
+// Callback for search person call.
 searchHandler.searchPersonSuccess = function (response) {
 	var result = JSON.parse(response);
 	searchHandler.deleteTempPersons();
@@ -60,7 +59,7 @@ searchHandler.searchPersonSuccess = function (response) {
 	}
 }
 
-/** Function to display the movies result. */
+// Function to display the movies result.
 searchHandler.showResults = function (content) {
 	var result = JSON.parse(content);
 
@@ -77,6 +76,7 @@ searchHandler.showResults = function (content) {
 	showElement('results');
 }
 
+// Creates title element for search (actor, movie or whatever).
 searchHandler.createTitleForResults = function (result, type, divId) {
 	$('#' + divId).html('');
 	var totalResults = $('<div/>', { class: 'text-centered' })
@@ -84,6 +84,7 @@ searchHandler.createTitleForResults = function (result, type, divId) {
 	$('#' + divId).append(totalResults);
 }
 
+// Creates paginator element for search (actor, movie or whatever).
 searchHandler.createPaginationForResults = function (pages, handlerFunction, divId) {
 	$('#' + divId).html('');
 	var navElement = $('<nav/>', { class: 'text-centered' });
@@ -99,6 +100,7 @@ searchHandler.createPaginationForResults = function (pages, handlerFunction, div
 	$('#' + divId).append(navElement);
 }
 
+// Creates the movies widgets.
 searchHandler.createMoviesResults = function (movies) {
 	$('#movies-result-container').html('');
 	movies.forEach(function (movie, index) {
@@ -106,6 +108,7 @@ searchHandler.createMoviesResults = function (movies) {
 	})
 }
 
+// Create each movie widget.
 searchHandler.buildMovieWidget = function (movie) {
 	var config = getConfiguration();
 	var wrapper = $('<div/>', { class: 'col-sm-3 col-md-3' });
@@ -141,6 +144,7 @@ searchHandler.buildMovieWidget = function (movie) {
 	return wrapper;
 }
 
+// Creates persons panel if search returns more than just one result.
 searchHandler.createPersonResults = function (persons) {
 	$('#persons').html('');
 	persons.forEach(function (person, index) {
@@ -149,6 +153,7 @@ searchHandler.createPersonResults = function (persons) {
 	showElement('persons');
 }
 
+// Creates a button for each person.
 searchHandler.buildPersonButton = function (person) {
 	var button = $('<button/>',
 		{
@@ -161,6 +166,7 @@ searchHandler.buildPersonButton = function (person) {
 	return button;
 }
 
+// Petition for the movies for an specific actor.
 searchHandler.getMoviesByActorId = function (personId, pageNumber) {
 	pageNumber = pageNumber == undefined ? '1' : pageNumber;
 	searchHandler.currentPerson = personId;
@@ -171,11 +177,13 @@ searchHandler.getMoviesByActorId = function (personId, pageNumber) {
 	ajaxRequest.post(searchHandler.searchUrl, send2, searchHandler.actorInfoSuccess);
 }
 
+// Callback method for search movies by actor.
 searchHandler.searchMoviesSuccess = function (result) {
 	hideElement('persons-result');
 	searchHandler.showResults(result);
 }
 
+// Petition to retrieve all actors that match with the typed text.
 searchHandler.getActorsByName = function (value, pageNumber) {
 	pageNumber = pageNumber == undefined ? '1' : pageNumber;
 	var fixed = value.replace(' ', '+');
@@ -183,6 +191,7 @@ searchHandler.getActorsByName = function (value, pageNumber) {
 	ajaxRequest.post(searchHandler.searchUrl, send, searchHandler.searchPersonSuccess);
 }
 
+// Callback method for retrieve actor info.
 searchHandler.actorInfoSuccess = function (result) {
 	$('#person-info').html('');
 	var actorInfo = JSON.parse(result);
@@ -192,7 +201,6 @@ searchHandler.actorInfoSuccess = function (result) {
 
 	$('#person-name').html(titleLink + '<br/>(' + actorInfo.place_of_birth + ')');
 
-	/* Person info*/
 	if(actorInfo['profile_path']!= null) {
 		personPhoto = config.images['base_url'] + config.images['poster_sizes'][2] + actorInfo['profile_path'];
 	}
@@ -205,6 +213,7 @@ searchHandler.actorInfoSuccess = function (result) {
 	$('#person-info').append(actorInfo.biography);
 }
 
+// Method that handles the movies paginator.
 searchHandler.searchMoviePage = function (event) {
 	event.preventDefault();
 	var targetPage = $(event.currentTarget).html();
@@ -213,6 +222,7 @@ searchHandler.searchMoviePage = function (event) {
 	searchHandler.getMoviesByActorId(person.id, targetPage);
 }
 
+// Method that handle the actors paginator.
 searchHandler.searchActorPage = function (event) {
 	event.preventDefault();
 	var targetPage = $(event.currentTarget).html();
@@ -220,12 +230,14 @@ searchHandler.searchActorPage = function (event) {
 	searchHandler.getActorsByName(searchHandler.getValue(), targetPage);
 }
 
+// Petition to retrieves information for a movie.
 searchHandler.retrieveMovieInformation = function (event) {
 	var movieId = $(event.currentTarget).data('id');
 	var send = { type: 'movieInfo', movie: movieId };
 	ajaxRequest.post(searchHandler.searchUrl, send, searchHandler.movieInfoSuccess);
 }
 
+// Callback method for retrieves movie information.
 searchHandler.movieInfoSuccess = function (result) {
 	var movieInfo = JSON.parse(result);
 	var titleLink = '<a href="' + searchHandler.imdbTitle + movieInfo.imdb_id + '" target="_blank">';
@@ -244,18 +256,22 @@ searchHandler.movieInfoSuccess = function (result) {
 	$('#modal-movie-info').modal('show');
 }
 
+// Saves persons results temporally.
 searchHandler.setTempPersons = function (persons) {
 	return localStorage.setItem('TemporalPersons', JSON.stringify(persons));
 }
 
+// Gets temporally persons results.
 searchHandler.getTempPersons = function () {
 	return JSON.parse(localStorage.getItem('TemporalPersons'));
 }
 
+// Deletes the temporally results.
 searchHandler.deleteTempPersons = function () {
 	localStorage.removeItem('TemporalPersons');
 }
 
+// Search for a person in the temporally results.
 searchHandler.findPersonInTemp = function (personId) {
 	var result = null;
 	var persons = searchHandler.getTempPersons();
