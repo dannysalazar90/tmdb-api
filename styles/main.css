@@ -1,0 +1,56 @@
+.text-centered {
+	text-align: center;
+	font-size: 1.3em;
+	font-weight: bold;
+}
+
+.col-centered {
+    display:inline-block;
+    float:none;
+    text-align:left;
+    margin-right:-4px;
+}
+
+.hidden {
+	display: none;
+}
+
+.showed {
+	display: inline-block;
+}
+
+#messages, #results, #persons {
+    display: none;
+}
+
+.movie
+{
+    overflow: hidden;
+    box-shadow: 0 0 1px #CCC;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.movie .movie-title {
+    vertical-align: middle;
+    z-index: 2;
+    height: 100px;
+    overflow: auto;
+}
+
+.img-movie {
+    width: 185px;
+    height: 278px;
+}
+
+.movie .movie-resume {
+    height: 150px;
+    overflow: auto;
+}
+
+.person-btn {
+    margin: 3px;
+}
+
+.red-background {
+    background-color: #FF0000;
+}
