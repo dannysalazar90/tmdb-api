@@ -11,7 +11,8 @@ $connection = new TMDBConnection();
 switch ($type) {
 	case 'actor':
 		$searchCriteria =  $_POST['name'];
-		$result = $connection->searchByName($searchCriteria);
+		$pageNumber =  $_POST['pageNumber'];
+		$result = $connection->searchByName($searchCriteria, $pageNumber);
 		break;
 	case 'movies':
 		$searchCriteria =  $_POST['person'];
@@ -21,6 +22,10 @@ switch ($type) {
 	case 'actorInfo':
 		$searchCriteria =  $_POST['person'];
 		$result = $connection->searchActorInfo($searchCriteria);
+		break;
+	case 'movieInfo':
+		$searchCriteria =  $_POST['movie'];
+		$result = $connection->searchMovieInfo($searchCriteria);
 		break;
 	default:
 		break;

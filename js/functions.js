@@ -1,11 +1,7 @@
 $(document).ready(function() {
 	var actorName = $('#actor-name');
 	$('#clear-search').click(clearSearch);
-	$('.page-search').click(searchHandler.searchOtherPage);
 	actorName.keyup(searchHandler.handleChangeEvent);
-	if(actorName.val() == '') {
-		showMessage('Please write something first!');
-	}
 	ajaxRequest.post('php/getConfiguration.php', {}, saveConfiguration);
 })
 

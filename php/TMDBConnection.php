@@ -19,9 +19,9 @@ class TMDBConnection
 		return $this->curlTo('configuration');
 	}
 
-	function searchByName($name)
+	function searchByName($name, $pageNumber)
 	{
-		$config = array('query' => $name);
+		$config = array('query' => $name, 'page' => $pageNumber);
 		return $this->curlTo('search/person', $config);
 	}
 
@@ -34,6 +34,11 @@ class TMDBConnection
 	function searchActorInfo($actorId)
 	{
 		return $this->curlTo('person/'.$actorId);
+	}
+
+	function searchMovieInfo($movieId)
+	{
+		return $this->curlTo('movie/'.$movieId);
 	}
 
 	function curlTo($spaceName, $arguments = null)
