@@ -56,6 +56,7 @@ searchHandler.searchPersonSuccess = function (response) {
 	else {
 		showMessage('There are no results for your search', 'danger');
 		hideElement('persons-result');
+		hideElement('results');
 	}
 }
 
